@@ -1,3 +1,3 @@
 # SQL
-SQL Notes /n
+SQL Notes <br>
 SQL Practices
