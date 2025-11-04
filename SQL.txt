@@ -30,3 +30,18 @@ Self Join      | Regular inner join where table is joined with itself with alias
                         JOIN table AS alias2 
                         ON alias1.column = alias2.related_column;
                 
+Subqquery
+
+Allows complex filtering, aggregation, and data manipulation by using the result of one query inside another
+                
+                SELECT column_name
+                FROM table_name
+                WHERE column_name expression operator 
+                   (SELECT column_name FROM table_name WHERE ...);
+
+Clauses that can be used with subqueries are:
+    WHERE: filter rows based on subquery results.
+    FROM: treat subquery as a temporary (derived) table.
+    HAVING: filter aggregated results after grouping.
+
+Single Row Subqery     | Returns exactly one row; Used in comparison operators
