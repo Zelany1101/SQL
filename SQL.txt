@@ -6,4 +6,27 @@ FROM mytable
     GROUP BY column
     HAVING constraint_expression
     ORDER BY column ASC/DESC
+
     LIMIT count OFFSET COUNT;
+
+
+Conditionals
+
+CASE WHEN        | Allows conditional logic to be applied in SELECT statement
+COALESCE()       | Returns first non null value in a list
+NULLIF()         | Compares two expressions and returns null if equal, otherwise returns first expression
+IF()             | Returns one value if a condition is TRUE or another value if condition is FALSE
+
+Joins
+
+Inner Join     | Selects rows from both tables that share a common field and values
+Left Join      | Returns all rows from the left table along with matching rows from the right table; Nulls are returned if no match for right table columns
+Right Join     | Returns all rows from the right table along with matching rows from the left table; Nulls are returned if no match for left table columns
+Full Join      | Returns all rows from left and right tables; Nulls returned for no matching values
+Cross Join     | Cartesian product of two tables where each row from the first table is paried with every row from the second 
+Self Join      | Regular inner join where table is joined with itself with aliases; Useful for comparing rows within the same table
+                        SELECT columns
+                        FROM table AS alias1
+                        JOIN table AS alias2 
+                        ON alias1.column = alias2.related_column;
+                
