@@ -45,3 +45,5 @@ Clauses that can be used with subqueries are:
     HAVING: filter aggregated results after grouping.
 
 Single Row Subqery     | Returns exactly one row; Used in comparison operators
+
+ENUM (enumeration) -- Data type used in MySQL and PostgreSQL used to define a column that can only hold a specific, predefined set of string values
