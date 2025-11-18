@@ -90,7 +90,7 @@ JOIN Employee e
 ON p.employee_id = e.employee_id
 GROUP BY project_id;
 
----------------------------------------------------------------------------------------------------------------------------------\
+---------------------------------------------------------------------------------------------------------------------------------
 Table: Users
 +-------------+---------+
 | Column Name | Type    |
@@ -114,15 +114,76 @@ Each row of this table contains the id of a user and the contest they registered
 
 Write a solution to find the percentage of the users registered in each contest rounded to two decimals.
 Return the result table ordered by percentage in descending order. In case of a tie, order it by contest_id in ascending order.
+Return the result table in any order.
 
 Output:
+SELECT contest_id
+    , ROUND((COUNT(DISTINCT r.user_id) / (SELECT COUNT(user_id) FROM Users)) * 100, 2) 
+    AS percentage
+FROM Users u
+JOIN Register r ON u.user_id = r.user_id 
+GROUP BY contest_id
+ORDER BY percentage DESC, contest_id ASC;
 
 
+---------------------------------------------------------------------------------------------------------------------------------
+Table: Queries
++-------------+---------+
+| Column Name | Type    |
++-------------+---------+
+| query_name  | varchar |
+| result      | varchar |
+| position    | int     |
+| rating      | int     |
++-------------+---------+
+This table may have duplicate rows.
+This table contains information collected from some queries on a database.
+The position column has a value from 1 to 500.
+The rating column has a value from 1 to 5. Query with rating less than 3 is a poor query.
+ 
 
-
-
-
-
-
-
+We define query quality as: The average of the ratio between query rating and its position.
+We also define poor query percentage as: The percentage of all queries with rating less than 3.
+Write a solution to find each query_name, the quality and poor_query_percentage.
+Both quality and poor_query_percentage should be rounded to 2 decimal places.
 Return the result table in any order.
+
+Output:
+SELECT query_name
+    , ROUND(AVG(rating/position), 2) AS quality
+    , ROUND(
+        SUM(CASE WHEN rating < 3 THEN 1 ELSE 0 END) * 100.0 / COUNT(*),
+        2
+    ) AS poor_query_percentage
+FROM Queries
+GROUP BY query_name;
+
+---------------------------------------------------------------------------------------------------------------------------------
+Table: Transactions
++---------------+---------+
+| Column Name   | Type    |
++---------------+---------+
+| id            | int     |
+| country       | varchar |
+| state         | enum    |
+| amount        | int     |
+| trans_date    | date    |
++---------------+---------+
+id is the primary key of this table.
+The table has information about incoming transactions.
+The state column is an enum of type ["approved", "declined"].
+ 
+
+Write an SQL query to find for each month and country, the number of transactions and their total amount, the number of approved transactions and their total amount.
+Return the result table in any order.
+
+Output:
+SELECT 
+    DATE_FORMAT(trans_date, '%Y-%m')AS month
+    , country
+    , COUNT(*) AS trans_count
+    , SUM(CASE WHEN state = 'approved' THEN 1 ELSE 0 END) AS approved_count
+    , SUM(amount) AS trans_total_amount
+    , SUM(CASE WHEN state = 'approved' THEN amount ELSE 0 END) approved_total_amount
+FROM Transactions
+GROUP BY month, country
