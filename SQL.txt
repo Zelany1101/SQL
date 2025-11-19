@@ -25,11 +25,13 @@ Right Join     | Returns all rows from the right table along with matching rows 
 Full Join      | Returns all rows from left and right tables; Nulls returned for no matching values
 Cross Join     | Cartesian product of two tables where each row from the first table is paried with every row from the second 
 Self Join      | Regular inner join where table is joined with itself with aliases; Useful for comparing rows within the same table
-                        SELECT columns
-                        FROM table AS alias1
-                        JOIN table AS alias2 
-                        ON alias1.column = alias2.related_column;
-                
+
+                    *~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*
+                    |    SELECT columns                             |
+                    |    FROM table AS alias1                       |
+                    |    JOIN table AS alias2                       |
+                    |    ON alias1.column = alias2.related_column;  |
+                    *~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*                
 Subqquery
 
 Allows complex filtering, aggregation, and data manipulation by using the result of one query inside another
@@ -39,7 +41,49 @@ Clauses that can be used with subqueries are:
     HAVING: filter aggregated results after grouping.
 
 
-
-
 ENUM (enumeration) -- Data type used in MySQL and PostgreSQL used to define a column that can only hold a specific, predefined set of string values
 
+Common Table Expression (CTE)
+
+Temporary, named result set defined within execution scope of a single SELECT, INSERT, UPDATE, MERGE, or DELETE statement
+    * Acts as a temporary view that exists only during the query
+    * Enables recursive operations for hierarchical data -- References itself and executes until the full hierarchy is returned
+            * Anchor member -- Initial query that selects the base case
+            * Recursive member -- Query that references the CTE itself, pullling the next level of data
+
+                    *~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~
+                    |    WITH cte_name (column1, column2, ...) AS (    |
+                    |        SELECT ...                                |
+                    |        FROM ...                                  |
+                    |        WHERE ...                                 |
+                    |    )                                             |
+                    |    SELECT ...                                    |
+                    |    FROM cte_name                                 |
+                    |    WHERE ...;                                    |
+                    *~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~
+
+                                      CTE                 vs	                    Subquery
+                        Can be referenced multiple times  |   Typically used once.
+                Improves readability for complex queries  |	  Can become difficult to read when nested.
+                       Optimized for multiple references  |	  May be less efficient for repeated operations.
+
+Stored Procedure
+
+Precompiled SQL statements stored in the database to perform a specific task
+    * Can be executed as a single unit
+    * Allow encapsulation of SQL code and business logic
+    * Upon execution, accepts input parameters and return output 
+    * Invoked by users, applications, or other procedures
+    * Example
+            * Automate database tasks
+            * Improve efficiency
+            * Reduce redundancy
+
+                    *~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~
+                   |    CREATE PROCEDURE procedure_name                      |
+                   |    (parameter1 data_type, parameter2 data_type, ...)    |
+                   |    AS                                                   |
+                   |    BEGIN                                                |
+                   |       -- SQL statements to be executed                  |
+                   |    END                                                  |
+                    *~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~
