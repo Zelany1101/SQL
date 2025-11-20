@@ -87,3 +87,35 @@ Precompiled SQL statements stored in the database to perform a specific task
                    |       -- SQL statements to be executed                  |
                    |    END                                                  |
                     *~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~
+
+Types of Stored Procedures
+    * System Stored Procedures -- Predefined store procedures by SQL server for administrative tasks such as system configuration or database management
+            * Example -- sp_help , sp_rename
+    * User-Defined Stored Procedures -- Custom stored procedures created by users often to perform specific operations tailored to business's needs
+            * Example -- Calculating totals, processing orders, generating reports
+    * Extended Stored Procedures -- Execution of external functions, including those in other languages; Bridge betweeen SQL server and 3rd party applications / tools
+    * CLR Stored Procedures -- Written in .NET language and executed within SQL server; Userful for when advanced functionality is needed that is not achieveable with SQL 
+
+Triggers
+
+Special stored procedure that automatically executes when specific events (INSERT, UPDATE, DELETE) occur on a table
+    * Automates tasks, maintain data consistency, record database activities
+    * Tied to a specific table, running without manual execution
+                  *~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*
+                  |    create trigger [trigger_name]        |
+                  |    [before | after]                     |
+                  |    {insert | update | delete}           |
+                  |    on [table_name]                      |
+                  |    FOR EACH ROW                         |
+                  |    BEGIN                                |
+                  |    END;                                 |
+                  *~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*
+
+Types of Triggers
+    * DDL Triggers -- Data Definition Language command events (e.g Create_view, Drop_table, Drop_view, Alter_table)
+            * Track changes in the structure of the database preventing any unauthorized table creation, alteration, or deletion
+    * DML Triggers -- Detects commands that manipulate data like INSERT, UPDATE, DELETE
+            * Scenario where data validation is needed before any insertion, log changes to a table, or cascade updates across related tables
+    * Logon Triggers -- Respond to user logon events; Monitor login activity, restrict access, or limit active sessions for a login
+            * Does not handle authentication errors
+
