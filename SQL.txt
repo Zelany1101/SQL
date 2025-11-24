@@ -119,3 +119,18 @@ Types of Triggers
     * Logon Triggers -- Respond to user logon events; Monitor login activity, restrict access, or limit active sessions for a login
             * Does not handle authentication errors
 
+LAG() Function -- Windows function used to access data from a previous row in the same result set without using a self join
+    * Used to compare current row's values to a prior one
+            * Tracking changes in sales over time
+            * Calculating time difference between events
+
+                    LAG(expression, offset, default_value) OVER (PARTITION By partition_column ORDER BY order_column)
+                            - epression -- column
+                            - offset -- how many rows back
+                            - default_value -- provides a value if no previous row exists
+                            - OVER -- defines the winndow
+                            - PARTITION BY -- devides data
+                            _ ORDER BY -- required to define the row sequence
+    * Example
+            * LAG(temperature, 1) OVER (ORDER BY recordDate) AS PreviousTemperature
+            * LAG(recordDate, 1) OVER (ORDER BY recordDate) AS PreviousRecordDate
